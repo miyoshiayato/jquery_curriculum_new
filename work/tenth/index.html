@@ -93,7 +93,7 @@
         var page = null; //ページの初期値
 
         // 検索ボタンをクリックした時の処理
-        $('.search__btn').on('click', function() {
+        $('[data-js="search-btn"]').on('click', function() {
           keyword = $('.search__text__input').val();
           page = 1;
           getData();
@@ -121,8 +121,8 @@
               keyword: keyword
             },
           }).done(function(data) { //処理が成功したら
-            if(data.hits === 0) { //
-              $('.message').append('<p class="error-message">検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>');
+            if(data.count === 0) { //
+              $('.message').append("検索結果が見つかりませんでした。<br>別のキーワードで検索して下さい。</p>");
               return false;
             }
             getList(data);
@@ -179,13 +179,13 @@
             getData();
         });
 
-        // disabledの判別処理
+        // 判別処理
         function checkItem(data) {
           if(data.page === 1) {
-            $('.btn-item:first-child').addClass('disabled');
+            $('[data-js="page-prev"]').addClass('disabled');
           }
           if(data.page === data.pageCount) {
-            $('.btn-item:last-child').addClass('disabled');
+            $('[data-js="page-next"]').addClass('disabled');
           }
         }
 
@@ -206,7 +206,7 @@
             default:
               errorMessage = '予期せぬエラーが発生しました。';
           }
-          $('.message').append('<p class="error-message">' + errorMessage + '</p>');
+          $('.message').append(errorMessage);
         }
       });
 
