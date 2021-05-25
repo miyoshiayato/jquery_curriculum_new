@@ -174,9 +174,10 @@
           }
           if($(this).data('js') === 'page-next') {
             page++;
-          } else if($(this).data('js') === 'page-prev')
+          } else if($(this).data('js') === 'page-prev') {
             page--;
-            getData();
+          }
+          getData();
         });
 
         // 判別処理
