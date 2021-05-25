@@ -98,7 +98,31 @@
           page = 1;
           getData();
         });
-        
+
+        // 前へ、次へボタンの処理
+        $(document).on('click', '.btn-item', function(event) {
+          event.preventDefault();
+          if($(this).hasClass('disabled')) {
+            return false;
+          }
+          if($(this).data('js') === 'page-next') {
+            page++;
+          } else if($(this).data('js') === 'page-prev') {
+            page--;
+          }
+          getData();
+        });
+
+        // 前へ、次へボタンの判別処理
+        function checkItem(data) {
+          if(data.page === 1) {
+            $('[data-js="page-prev"]').addClass('disabled');
+          }
+          if(data.page === data.pageCount) {
+            $('[data-js="page-next"]').addClass('disabled');
+          }
+        }
+
         // 検索結果のリセット処理
         function resetData() {
           $('.lists').empty();
@@ -164,30 +188,6 @@
                         '</div>' +
                       '</div>';
           $('.lists').after(pager);
-        }
-
-        // 読み込んだ時に実行(今何ページ目にいるかの処理)
-        $(document).on('click', '.btn-item', function(event) {
-          event.preventDefault();
-          if($(this).hasClass('disabled')) {
-            return false;
-          }
-          if($(this).data('js') === 'page-next') {
-            page++;
-          } else if($(this).data('js') === 'page-prev') {
-            page--;
-          }
-          getData();
-        });
-
-        // 判別処理
-        function checkItem(data) {
-          if(data.page === 1) {
-            $('[data-js="page-prev"]').addClass('disabled');
-          }
-          if(data.page === data.pageCount) {
-            $('[data-js="page-next"]').addClass('disabled');
-          }
         }
 
         // ステータスコードによってエラーを返す処理
